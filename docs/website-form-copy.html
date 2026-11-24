@@ -1,0 +1,81 @@
+<!-- Express Haulers Moving - send every website quote request straight to the automation
+     (Slack #inbound-leads, ClickUp, Movegistics). Covers BOTH forms on the site:
+       1. the Shopify contact form on the home page (it also emails contact@)
+       2. the Helium "Customer Fields" form on Get a Quote / Contact - it only saves a Shopify
+          customer and sends no email at all, so these leads were never seen (found 2026-09-30).
+     The forms keep working exactly as before; this only sends a copy.
+     Paste just before </body> in Online Store > Themes > Edit code > layout/theme.liquid. -->
+<script>
+(function () {
+  var HOOK = 'https://n8n.expresshaulers.com/webhook/lead/website/314290742d8d324e7e89';
+  var sent = {};
+  function send(fields) {
+    var key = (fields.email || '') + '|' + (fields.phone || '');
+    if (sent[key]) return;                      // the same person pressing submit twice
+    sent[key] = 1;
+    var data = new URLSearchParams(fields);
+    try {
+      if (navigator.sendBeacon) navigator.sendBeacon(HOOK, data);
+      else fetch(HOOK, { method: 'POST', body: data, keepalive: true });
+    } catch (err) {}
+  }
+
+  // 1) the Shopify contact form
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    var phone = form && form.querySelector && form.querySelector('[name="contact[phone]"]');
+    if (!phone) return;
+    var v = function (n) {
+      var el = form.querySelector('[name="contact[' + n + ']"]');
+      return el ? el.value : '';
+    };
+    send({ name: v('name'), phone: v('phone'), email: v('email'),
+           moving_from: v('moving_from'), moving_to: v('moving_to'),
+           move_date: v('moving_date'), message: v('message') });
+  }, true);
+
+  // 2) the Helium form: read every filled-in field by its label
+  function labelOf(el, root) {
+    var t = '';
+    if (el.id) { var l = root.querySelector('label[for="' + el.id + '"]'); if (l) t = l.textContent; }
+    if (!t) {
+      var box = el.closest('label, [class*="field"], [class*="Field"]');
+      var lab = box && box.querySelector('label, legend, [class*="label"], [class*="Label"]');
+      if (lab) t = lab.textContent;
+    }
+    return (t || el.getAttribute('aria-label') || el.placeholder || el.name || '').replace(/\*/g, '').trim();
+  }
+  function heliumFields(root) {
+    var f = {}, first = '', last = '', extra = [];
+    root.querySelectorAll('input, select, textarea').forEach(function (el) {
+      var type = (el.type || '').toLowerCase();
+      if (/hidden|password|submit|button/.test(type)) return;
+      if ((type === 'checkbox' || type === 'radio') && !el.checked) return;
+      var v = String(el.value || '').trim();
+      if (!v) return;
+      var lab = labelOf(el, root), k = lab.toLowerCase();
+      if (/first/.test(k) && /name/.test(k)) first = v;
+      else if (/last/.test(k) && /name/.test(k)) last = v;
+      else if (type === 'email' || /e-?mail/.test(k)) f.email = v;
+      else if (type === 'tel' || /phone|mobile|cell/.test(k)) f.phone = v;
+      else if (/from|pick.?up|current|origin/.test(k)) f.moving_from = f.moving_from ? f.moving_from + ', ' + v : v;
+      else if (/\bto\b|destination|drop.?off|new address/.test(k)) f.moving_to = f.moving_to ? f.moving_to + ', ' + v : v;
+      else if (type === 'date' || /date|when/.test(k)) f.move_date = v;
+      else if (/name/.test(k)) f.name = v;
+      else extra.push((lab || 'Note') + ': ' + v);
+    });
+    if (!f.name) f.name = (first + ' ' + last).trim();
+    f.message = extra.join('\n');
+    return f;
+  }
+  function onHelium(e) {
+    var root = e.target && e.target.closest && e.target.closest('[data-cf-form]');
+    if (!root) return;
+    if (e.type === 'click' && !e.target.closest('button, [type="submit"]')) return;
+    var f = heliumFields(root);
+    if (f.email || f.phone) send(f);
+  }
+  document.addEventListener('submit', onHelium, true);
+  document.addEventListener('click', onHelium, true);
+})();
+</script>

@@ -1,0 +1,249 @@
+Express Haulers Moving
+Invoice Auditor | Complete Developer Specification
+Updated November 16, 2026 • Google Sheet: Invoice Audit
+
+
+
+1. Purpose and authority Audit every completed moving job before and after
+invoice finalization, identify genuine underbilling, overbilling, missing charges,
+payment discrepancies, and unresolved evidence. Post actionable exceptions to
+Slack #invoices; remain silent when no new or materially changed issues exist.
+Never autonomously edit invoices, collect payments, issue refunds, or contact
+customers.
+Use the signed estimate as the initial agreement. Later verified revised estimates, customer-
+approved phone/SMS agreements, and authorized internal instructions can change pricing.
+Evaluate each charge using the most recent verified applicable agreement, not automatically the
+newest document or highest rate. An internal instruction alone may not prove customer
+acceptance; flag unresolved conflicts. The pricing spreadsheet is a reference, not a substitute for
+negotiated terms.
+
+
+
+2. Evidence sources and matching
+   Original and revised estimates, invoices, job records, completed-job lists, crew records, access
+    details and moving inventory.
+   RingCentral Line 1, Line 2 and Line 3: incoming/outgoing calls, SMS, available transcripts, AI
+    summaries, and recordings where accessible. Search across all lines, not just the primary one.
+   Slack channels #sales, #customer-quotes, #sales-issues-and-damages for authorized changes;
+    post issues only to #invoices.
+   Gmail mailbox contact@expresshaulers.com for payment confirmations, reversals and related
+    communications.
+   Google Drive spreadsheet Cash Payments for recorded cash transactions. Read only; do not
+    write back.
+   Match by stable Job ID where possible, supported by customer identity, contact information,
+    date, invoice/estimate ID, transaction reference and context. Never rely on name-only
+    matching.
+
+
+
+3. Hourly labor pricing
+   Use the hourly rate and minimum hours in the signed or validly updated estimate. Minimum
+    applies separately to each day on multi-day jobs.
+   Billable time begins when crew arrives at pickup and ends when work at dropoff finishes.
+    Pickup-to-dropoff driving and traffic count as labor time; customer-caused waiting counts;
+    meal breaks do not.
+
+
+                          EXPRESS HAULERS MOVING | Internal developer specification
+   Subtract verified nonbillable breaks, round net billable time up to the next 15-minute
+    increment, then apply the agreed daily minimum.
+   Additional mover: typically +$50/hour, sometimes negotiated to +$40/hour, added to the
+    existing crew hourly rate only during the period that mover actually worked. Do not
+    automatically apply a higher crew rate to the full day.
+   Verify start/end times, waiting, break durations, extra crew arrival/departure, and rate changes
+    against job records and communications. Flag insufficient or contradictory evidence rather
+    than inventing times.
+
+
+
+4. Truck, mileage, access and specialty pricing
+   Truck charges are flat charges separate from hourly labor unless the customer agreement
+    explicitly states otherwise. Additional trucks use agreed or authorized pricing.
+   Check quoted truck/fuel charges and tolls against final billing; do not unilaterally replace
+    agreed charges with a mileage formula. Flag unexplained material toll or TV-mounting
+    differences.
+   Review stair charges, long carries, distance/access complications and specialty items against
+    quoted and updated terms. A lower final stair charge than quoted warrants checking for a
+    legitimate waiver.
+   Pianos, safes and other specialty-item fees may be waived by an authorized person. Do not
+    reimpose waived charges.
+   Extra packing, assembly/disassembly, storage, junk removal and materials: compare
+    performed work and actual usage to agreement and approved waivers; avoid double-
+    charging labor already included in hourly rates.
+   Storage volume/duration and additional junk removal can be manually repriced; search
+    owner/salesperson updates and customer communications.
+
+
+
+5. Discounts, waivers and changes
+   Owner or salesperson may authorize discounts, waived materials, specialty fees, additional
+    movers/trucks and other adjustments verbally or in writing.
+   Record the exact changed term, authorization source, effective date/time, and evidence.
+    Reconcile conflicting sources and customer acceptance where relevant.
+   Do not mark a legitimate negotiated rate as underbilling solely because it is below a
+    reference price.
+   Always flag refunds and credits for review, including promised versus issued amount and the
+    exact difference, even if an authorization exists.
+
+
+
+6. Deposits and payment reconciliation
+   Typical deposit is $50 and is included in the quoted moving cost, not added to it. Credit only
+    applicable deposits once.
+   A previous deposit may have been forfeited after rescheduling; multiple deposits require
+    verifying which remain applicable. Never automatically credit or forfeit without supporting
+    evidence.
+
+                         EXPRESS HAULERS MOVING | Internal developer specification
+   Payment methods currently in scope: credit card and cash. Do not assume ACH, Zelle or debit
+    card transactions.
+   Card fee rule supplied by company: 3.5% of the card-funded portion of the full moving cost,
+    including a card-paid deposit even if the fee was not charged separately at deposit time. No
+    card fee on the cash-funded portion. Verify that card/cash allocation is supported.
+   Illustration: $2,000 full-card moving cost includes a $50 card deposit; fee $70; total obligation
+    $2,070; if $50 already collected, remaining $2,020.
+   Illustration: $2,000 moving cost funded $1,000 cash and $1,000 card; card fee $35; total
+    obligation $2,035 before deducting applicable payments.
+   Verify Gmail payment confirmation status and any later failure, refund, dispute or chargeback;
+    cross-check Cash Payments sheet for cash. Duplicate emails are not duplicate payments.
+   Net collected = verified card payments + verified cash payments - refunds and reversals.
+    Outstanding balance = correct invoice obligation - net collected. Distinguish correctly billed
+    but unpaid from actual underbilling.
+   Tips are never part of the invoice, moving cost or card-fee calculation.
+
+Compliance gate: The 3.5% card surcharge is a user-provided operational rule, not a legal
+determination. Before automating fee validation or charging, confirm current New Jersey law,
+card-network rules, disclosure, and the actual cost-of-acceptance cap with the payment provider
+or counsel. The auditor never applies charges itself.
+
+
+
+7. RingCentral attribution
+   Identify primary customer-handling line as Line 1, Line 2, Line 3, or Unknown. Record other
+    lines used and the specific line associated with each relevant pricing change.
+   Record the quote/booking RC line, most recent communication, call/SMS IDs and evidence
+    links. Do not guess the primary line when the evidence is inconclusive.
+   Audit all three lines for every job, including communications that contradict or update earlier
+    quotes.
+
+
+
+8. Audit outcomes, discrepancy rules and confidence
+Outcome                  Required meaning
+
+Passed               Required sources checked successfully; no unresolved material discrepancy.
+
+Needs Review              A potential discrepancy or contradictory evidence requires investigation.
+
+Incomplete               A required record, system connection, transcript or confirmation is
+unavailable. Never treat as passed.
+
+Ignore isolated $1-$3 pricing differences as routine noise, but do not suppress
+repeated/cumulative discrepancies, missing payments, refunds, duplicate billing, compliance
+concerns or other material exceptions. Confidence is High/Medium/Low based on evidence
+strength, not a probability of customer liability. Low confidence and missing evidence must not be
+presented as confirmed debt.
+
+
+
+                         EXPRESS HAULERS MOVING | Internal developer specification
+9. Slack issue workflow and reviewers
+     Publish a single deduplicated thread per unique issue in #invoices containing Job ID,
+      customer, primary/additional RC lines, issue type, expected vs invoiced, potential impact,
+      confidence, evidence links, recommended investigation and status.
+     Initial assignment is Unclaimed. Genesis David or Llyod Cortes may claim it from Slack. First
+      successful claim wins; enforce atomic/serialized claim handling to avoid dual ownership.
+     Reviewer statuses: Unclaimed, Investigating, Resolved, Dismissed, Escalated. Require
+      resolution notes on closure, retain claimant and timestamps, and support authorized
+      reassignment.
+     Send a reminder in the original thread when unclaimed after 24 hours. Escalate high-value
+      unresolved issues after a configurable period; dollar threshold and escalation timing must be
+      set by owner/developer.
+     Update the existing thread and audit record on new evidence or status changes; do not
+      repeatedly post the same finding.
+
+
+
+10. Google Sheets audit data model (workbook: Invoice Audit)
+Tab                        Granularity and function
+
+Invoice Audit Records              One row per job: identifiers, line attribution,
+estimate/agreed/invoice totals, verified cash/card payments, reversals, net collected, balance,
+outcome and evidence.
+
+Audit Discrepancies               One row per issue: unique ID, category, expected/actual, impact,
+confidence, source links, Slack thread, claimant, status, resolution, corrected invoice amount and
+money actually recovered.
+
+Audit Activity Log               Append-only timestamped history of audits, findings, claims,
+reassignments, revisions, payment events, closure and system errors.
+
+Use deterministic Job IDs and Issue IDs, idempotent writes and a durable event log. Slack is the
+review interface, not the only historical record. Protect evidence links and restrict spreadsheet
+permissions; do not store payment credentials or unnecessary personal information.
+
+
+
+11. Monitoring, re-auditing and exception handling
+     Compare all completed jobs with audited jobs; flag missing invoices or unaudited jobs.
+     Detect duplicate invoices, payments, cash entries and payment references assigned to
+      multiple jobs.
+     Re-audit when invoices are revised, new RingCentral/Slack evidence appears, payments arrive,
+      or refunds/chargebacks post. Preserve versions and prior decisions.
+     Check health/access for Gmail, Google Drive, Slack, invoice/estimate source and each
+      RingCentral line. An outage creates an Incomplete audit plus a connection alert, never a false
+      Passed result.
+     Maintain evidence provenance, timestamps, original amount, amended amount and source
+      IDs; do not infer an agreement solely from a call summary when conflicting primary evidence
+      exists.
+                          EXPRESS HAULERS MOVING | Internal developer specification
+12. Weekly reporting and KPIs
+   Jobs completed, jobs audited, Passed / Needs Review / Incomplete counts, coverage rate, and
+    audits awaiting evidence.
+   Issues detected, confirmed, dismissed, false-positive rate, average time to claim/resolve,
+    unclaimed/overdue counts.
+   Potential underbilling, confirmed underbilling, amount additionally invoiced, and actual
+    additional revenue collected as separate metrics.
+   Overbilling, credits/refunds, unpaid balances, failed payments and chargebacks as separate
+    categories.
+   Patterns by RingCentral line, issue type and reviewer activity; use evidence-backed attribution
+    rather than assuming the line caused the error.
+
+
+
+13. Permissions, safety and acceptance testing
+   Read access to estimates/invoices/job records, all three RC lines, Gmail
+    contact@expresshaulers.com, Cash Payments sheet, and relevant Slack channels. Write access
+    only to audit records and designated Slack workflow.
+   No automatic customer communications, invoice edits, refunds, collection actions, or
+    modifications to Cash Payments.
+   Test against 20-30 completed jobs including verbal revisions, two-day minimums, extra
+    movers, breaks, truck additions, deposit forfeiture, mixed cash/card payments, refunds,
+    multiple RC lines, and inaccessible records.
+   Acceptance criteria: no missed completed jobs, no duplicate alerts or payment counting,
+    reliable claim locking, clear evidence for every issue, no false Passed when sources fail, and
+    correct separation of billed vs collected revenue.
+   Start in review-only mode. Compare automation findings with manual reviewer judgments
+    and tune false positives before regular notifications.
+
+
+
+14. Configuration still required (not assumed)
+   Exact moving software / invoice API and completed-job source; field mapping and stable
+    identifiers.
+   RingCentral extension-to-Line 1/2/3 mapping and access to transcripts/recordings for each
+    line.
+   Gmail confirmation senders/subject patterns, payment processor reconciliation and
+    chargeback feeds.
+   Cash Payments spreadsheet ID, columns, unique transaction references and whether entries
+    are authoritative proof of cash receipt.
+   Slack user IDs for Genesis David and Llyod Cortes, claim-action implementation, permissions
+    and escalation recipient.
+   High-value escalation threshold, escalation delay, audit cadence, timezone and weekly report
+    delivery schedule.
+   Formal validation of card surcharge legality and the exact contractual/disclosure terms.
+
+
+
+                         EXPRESS HAULERS MOVING | Internal developer specification
+

@@ -1,0 +1,125 @@
+{
+ "Condition Before Move": {
+  "id": "0626c875-4b04-4d89-9cba-6ecdc84ee302",
+  "type": "drop_down",
+  "options": {
+   "No Damage": "ef87b881-59cb-441e-80e1-049db0f1412a",
+   "Pre-existing": "7cd0ef3c-4643-4db7-90b3-dbcfbb0b2190",
+   "Unknown": "178b7dac-92de-4857-90a6-cb11066e6fd7"
+  }
+ },
+ "Close-up Photo of Damage": {
+  "id": "0960b92c-e007-4cd4-a51d-e83c741b3357",
+  "type": "attachment",
+  "options": {}
+ },
+ "Customer Name": {
+  "id": "412c9b51-b3cd-48f2-ab48-020eb79aed30",
+  "type": "short_text",
+  "options": {}
+ },
+ "Email": {
+  "id": "479f4199-4504-4e12-a8af-c246d9763ca6",
+  "type": "email",
+  "options": {}
+ },
+ "Phone": {
+  "id": "69f82836-c950-4578-b93e-4b435081fd55",
+  "type": "phone",
+  "options": {}
+ },
+ "Decision / Resolution": {
+  "id": "6ac7c54c-bc0f-4d05-919c-f7a6e66aff73",
+  "type": "text",
+  "options": {}
+ },
+ "Additional Coverage Purchased": {
+  "id": "9276650c-9766-4446-be50-d56d3f60b52c",
+  "type": "drop_down",
+  "options": {
+   "Basic Coverage - $1 Per Pound": "13e6c803-8717-4988-82f1-79584aa0d38e",
+   "Full Value - 0 Deductible": "7a41c209-947b-43c1-b82e-629ce608419b",
+   "Full Value - $250 Deductible": "bc98478f-b853-4efe-95a9-d10f9538509d",
+   "Full Value - $500 Deductible": "e136eae9-c9ce-4ae5-9c5e-a355c10b35db"
+  }
+ },
+ "Customer Has Insurance": {
+  "id": "97597ff9-08d8-4d5e-aeb4-efcee9ce47b1",
+  "type": "drop_down",
+  "options": {
+   "Yes": "7d4b4478-f927-443e-b1e8-73a086bcf9b7",
+   "No": "399b2677-00ff-48d3-9b10-38432602f185",
+   "Unknown": "fa58b1f0-ab95-4f9a-a15a-04fa166f62b4"
+  }
+ },
+ "Date Reported": {
+  "id": "ae0e285c-d0c4-4d88-9941-7e7aeaa0dfe4",
+  "type": "date",
+  "options": {}
+ },
+ "Resolved Date": {
+  "id": "ae8925d5-f6a4-4d04-9139-f1e1365bf70f",
+  "type": "date",
+  "options": {}
+ },
+ "Item / Area Damaged": {
+  "id": "b5103d66-00c9-475a-9547-b9cad4f3fa77",
+  "type": "short_text",
+  "options": {}
+ },
+ "Additional Photos / Receipts": {
+  "id": "b7b96848-9339-498b-9fd3-70bd02af9f49",
+  "type": "attachment",
+  "options": {}
+ },
+ "Wide Shot Photo (Full Item/Area)": {
+  "id": "b9ffd47a-3d18-486b-a23d-98f6739bdf5e",
+  "type": "attachment",
+  "options": {}
+ },
+ "What Happened": {
+  "id": "bac61838-2c5e-4a91-af80-fc0304f04bda",
+  "type": "text",
+  "options": {}
+ },
+ "Crew Members": {
+  "id": "bb2486e9-e55f-47f8-84d4-65c243b1840b",
+  "type": "short_text",
+  "options": {}
+ },
+ "Customer Request": {
+  "id": "bc1c458b-5e02-44da-81dd-2f8cb0dd6993",
+  "type": "drop_down",
+  "options": {
+   "Repair": "d278adda-de54-4719-b4c5-8e10aa7aa014",
+   "Replacement": "971f017e-2b60-4100-955c-174072ffc6fa",
+   "Reimbursement": "3077d8b9-9fe3-4a1e-a6a2-23b05cde3a02",
+   "Other": "ee1913c1-f607-4087-8d27-5796ae343934"
+  }
+ },
+ "Estimated Value": {
+  "id": "c9f5fe93-9625-4094-a5ff-bbc89b4c3ef4",
+  "type": "currency",
+  "options": {}
+ },
+ "Settlement Amount": {
+  "id": "ea8b034d-f316-4425-b8d7-982954a012e2",
+  "type": "currency",
+  "options": {}
+ },
+ "Origin Address": {
+  "id": "eb6ac55b-9e51-4f87-9245-dce663c90108",
+  "type": "short_text",
+  "options": {}
+ },
+ "Destination Address": {
+  "id": "eea79095-b049-4eb8-8b30-a721a0a5cb6c",
+  "type": "short_text",
+  "options": {}
+ },
+ "Move Date": {
+  "id": "f9c2d22c-5862-4095-9b4d-49f998e3e53f",
+  "type": "date",
+  "options": {}
+ }
+}
